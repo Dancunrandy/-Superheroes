@@ -1,17 +1,25 @@
 class HeroesController < ApplicationController
     def index
-      @heroes = Hero.all
-      respond_to do |format|
-        format.json { render json: @heroes }
+        @heroes = Hero.all
+        respond_to do |format|
+            format.json { render json: @heroes.to_json(except: [:created_at, :updated_at]) }
+            format.any { render json: { error: "Invalid request format" }, status: :unsupported_media_type }
+        end
       end
-    end
     
-    def show
-      @hero = Hero.find(params[:id])
-      respond_to do |format|
-        format.json { render json: @hero }
+      def show
+        @hero = Hero.find_by_id(params[:id])
+        if @hero
+          respond_to do |format|
+            format.json { render json: @hero.as_json(except: [:created_at, :updated_at]) }
+          end
+        else
+          respond_to do |format|
+            format.json { render json: { error: "Hero not found" }, status: :not_found }
+          end
+        end
       end
-    end
+      
     
     def create
       @hero = Hero.new(hero_params)
