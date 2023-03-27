@@ -57,8 +57,12 @@ class HeroPowersController < ApplicationController
   
     # Use callbacks to share common setup or constraints between actions.
     def set_hero_power
-      @hero_power = HeroPower.find(params[:id])
+      @hero_power = HeroPower.find_by(id: params[:id])
+      unless @hero_power
+        render json: { errors: ["HeroPower not found"] }, status: :not_found
+      end
     end
+    
   
     # Only allow a trusted parameter "white list" through.
     def hero_power_params
