@@ -4,7 +4,7 @@ This is a simple API for managing heroes and their powers. The API allows you to
 ## Getting Started
 To get started, follow these steps:
 
-1. Clone the repository: git clone https:github.com/Dancunrandy/-Superheroes
+1. Clone the repository: git clone https://github.com/Dancunrandy/-Superheroes
 2. Install the required dependencies: bundle install
 3. Create the database and run migrations: rails db:create && rails db:migrate
 4. Seed the database with sample data: rails db:seed
