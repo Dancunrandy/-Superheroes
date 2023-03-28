@@ -1,6 +1,6 @@
 class PowersController < ApplicationController
   before_action :set_power, only: [:show, :update]
-
+  rescue_from ActiveRecord::RecordInvalid, with: :validation_error
   # GET /powers
   def index
     @powers = Power.all
@@ -44,13 +44,13 @@ class PowersController < ApplicationController
     if @power.update(power_params)
       respond_to do |format|
         format.json { render json: @power }
-      end
-    else
-      respond_to do |format|
-        format.json { render json: @power.errors, status: :unprocessable_entity }
-      end
+      end 
     end
   end
+  # def update
+  #   power = Power.find_by(id: params[:id])
+    
+     
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -65,7 +65,10 @@ class PowersController < ApplicationController
     
     # Only allow a list of trusted parameters through.
     def power_params
-      params.require(:power).permit(:id, :name)
+      params.require(:power).permit(:id, :name, :description)
     end
     
+    def validation_error
+      render json: { error: 'validation errors' }, status: :unprocessable_entity 
+    end 
 end

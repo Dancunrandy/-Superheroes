@@ -66,7 +66,7 @@ class HeroPowersController < ApplicationController
   
     # Only allow a trusted parameter "white list" through.
     def hero_power_params
-      params.require(:hero_power).permit(:hero_id, :power_id)
+      params.require(:hero_power).permit(:hero_id, :power_id, :strength)
     end
   end
   
